@@ -2,11 +2,15 @@
 
 namespace App\Providers;
 
-use Illuminate\Cache\RateLimiting\Limit;
-use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
+use RuntimeException;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Cache\RateLimiting\Limit;
+use App\Routing\Contracts\RouteRegistrar;
+use Domains\Workflow\Routing\Registrars\TaskRouteRegistrar;
+use Illuminate\Contracts\Routing\Registrar;
+use Illuminate\Support\Facades\RateLimiter;
+use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -19,6 +23,10 @@ class RouteServiceProvider extends ServiceProvider
      */
     public const HOME = '/dashboard';
 
+	protected array $registrars = [
+        TaskRouteRegistrar::class,
+    ];
+
     /**
      * Define your route model bindings, pattern filters, and other route configuration.
      *
@@ -27,15 +35,6 @@ class RouteServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->configureRateLimiting();
-
-        $this->routes(function () {
-            Route::middleware('api')
-                ->prefix('api')
-                ->group(base_path('routes/api.php'));
-
-            Route::middleware('web')
-                ->group(base_path('routes/web.php'));
-        });
     }
 
     /**
@@ -49,4 +48,18 @@ class RouteServiceProvider extends ServiceProvider
             return Limit::perMinute(60)->by($request->user()?->id ?: $request->ip());
         });
     }
+
+    protected function map(Registrar $router): void
+	{
+		foreach ($this->registrars as $registrar) {
+			if (! class_exists($registrar) || ! is_subclass_of($registrar, RouteRegistrar::class)) {
+				throw new RuntimeException(sprintf(
+					'Cannot map routes \'%s\', it is not a valid routes class',
+					$registrar
+				));
+			}
+ 
+			(new $registrar)->map($router);
+		}
+	}
 }
