@@ -49,7 +49,7 @@ class RouteServiceProvider extends ServiceProvider
         });
     }
 
-    protected function map(Registrar $router): void
+    public function map(Registrar $router): void
 	{
 		foreach ($this->registrars as $registrar) {
 			if (! class_exists($registrar) || ! is_subclass_of($registrar, RouteRegistrar::class)) {
