@@ -9,6 +9,12 @@ Task:
   relationships:
     user: BelongTo
     tags: BelongsToMany
+  APIs:
+    1: "[GET] /api/v1/tasks - Get all Tasks for the authenticated user."
+    2: "[POST] /api/v1/tasks - Create a new Task for the authenticated user."
+    3: "[PUT] /api/v1/tasks/{task} - Update a Task owned by the authenticated user."
+    4: "[DELETE] /api/v1/tasks/{task} - Delete a Task owned by the authenticated user."
+    5: "[GET] /api/v1/search - Search for specific tasks or tags."
 
 Tag:
   attributes:
