@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers\Api\V1\Workflow\Tasks;
 
-use App\Http\Controllers\Controller;
+use App\Models\Task;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Http\JsonResponse;
+use App\Http\Controllers\Controller;
 
 class DeleteController extends Controller
 {
@@ -13,8 +16,13 @@ class DeleteController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function __invoke(Request $request)
+    public function __invoke(Task $task)
     {
-        //
+        $task->delete();
+
+        return new JsonResponse(
+            data: null,
+            status: Response::HTTP_OK,
+        ); 
     }
 }
