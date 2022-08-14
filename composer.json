@@ -8,6 +8,7 @@
         "php": "^8.0.2",
         "guzzlehttp/guzzle": "^7.2",
         "hammerstone/fast-paginate": "^0.1.8",
+        "juststeveking/laravel-data-object-tools": "^1.0",
         "laravel/framework": "^9.19",
         "laravel/jetstream": "^2.11",
         "laravel/sanctum": "^3.0",
