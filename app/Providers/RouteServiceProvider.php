@@ -51,6 +51,8 @@ class RouteServiceProvider extends ServiceProvider
 
     public function map(Registrar $router): void
 	{
+        $router->middleware('web')->group(base_path('routes/web.php'));
+        
 		foreach ($this->registrars as $registrar) {
 			if (! class_exists($registrar) || ! is_subclass_of($registrar, RouteRegistrar::class)) {
 				throw new RuntimeException(sprintf(
