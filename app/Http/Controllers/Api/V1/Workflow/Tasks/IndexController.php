@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Api\V1\Workflow\Tasks;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\TaskResource;
+use App\Models\Task;
 use Illuminate\Http\Request;
 
 class IndexController extends Controller
@@ -15,6 +17,6 @@ class IndexController extends Controller
      */
     public function __invoke(Request $request)
     {
-        //
+        return TaskResource::collection(Task::paginate());
     }
 }

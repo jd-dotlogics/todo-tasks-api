@@ -11,7 +11,7 @@ use Illuminate\Queue\SerializesModels;
 use Infrastructure\Workflow\Actions\CreateNewTaskContract;
 use JustSteveKing\DataObjects\Contracts\DataObjectContract;
  
-final class CreateTask implements ShouldQueue
+class CreateTask implements ShouldQueue
 {
     use Queueable;
     use Dispatchable;
