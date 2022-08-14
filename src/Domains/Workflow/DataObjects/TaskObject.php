@@ -10,10 +10,10 @@ class TaskObject implements DataObjectContract
 {
     public function __construct(
         public readonly string $name,
-        public readonly string $description,
-        public readonly TaskStatus $status,
-        public readonly null|Carbon $due,
-        public readonly null|Carbon $completed,
+        public readonly ?string $description = null,
+        public readonly TaskStatus $status = TaskStatus::OPEN,
+        public readonly ?Carbon $due = null,
+        public readonly ?Carbon $completed = null,
     ) {
     }
 
